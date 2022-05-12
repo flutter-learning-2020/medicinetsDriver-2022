@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicinetsdriver/providers/sigin.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,10 +10,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginProvider login = new LoginProvider();
+
   final _dataUser = <String, String>{
     'user': 'juan',
     'password': 'admin',
   };
+
   String user = '';
   String password = '';
   bool isLoading = false;

@@ -19,6 +19,30 @@ class _PedidosPageState extends State<PedidosPage> {
     },
     {
       'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
+    },
+    {
+      'name': 'Pedido 3',
     }
   ];
 
@@ -75,64 +99,123 @@ class _PedidosPageState extends State<PedidosPage> {
       itemCount: pedidos == null ? 0 : pedidos.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
-            elevation: 2.0,
+            elevation: 3.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(13.0)),
             margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             child: Container(
               decoration: BoxDecoration(
                   // color: ColorsM.primary,
-
+                  // borderRadius: BorderRadius.all(Radius.circular(40.0))
                   ),
               margin: EdgeInsets.all(12.0),
               child: Column(children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text('Peido # 2c3453',
-                          style: TextStyle(
-                            fontFamily: 'Quicksand',
-                            fontSize: 19.0,
-                            fontWeight: FontWeight.bold,
-                            color: ColorsM.textColor,
-                          )),
-                      Container(
-                          height: 35.0,
-                          padding: EdgeInsets.only(
-                              right: 10.0, left: 10.0, top: 4.0, bottom: 3.0),
-                          child: Text(
-                            'Caja Bs. 23.0',
+                Container(
+                  // color: Colors.green,
+                  margin: EdgeInsets.only(bottom: 10.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Peido # 2c3453',
                             style: TextStyle(
                               fontFamily: 'Quicksand',
+                              fontSize: 19.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 18.0,
+                              color: ColorsM.textColor,
+                            )),
+                        Container(
+                            height: 35.0,
+                            padding: EdgeInsets.only(
+                                right: 10.0, left: 10.0, top: 4.0, bottom: 3.0),
+                            child: Text(
+                              'Caja Bs. 23.0',
+                              style: TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: ColorsM.secondary,
-                          ))
-                    ]),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: ColorsM.secondary,
+                            ))
+                      ]),
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SvgPicture.asset(
-                      'assets/images/icon_start_and_point.svg',
-                      height: 100.0,
-                      width: 20.0,
+                    Container(
+                      // color: Colors.indigo,
+                      margin: EdgeInsets.only(right: 10.0),
+                      child: SvgPicture.asset(
+                        'assets/images/icon_start_and_point.svg',
+                        height: 110.0,
+                        width: 20.0,
+                      ),
                     ),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Farmacord-avenida beni'),
-                          Text('Av. Beni 4to Anillo'),
-                          Text('Farmacord-avenida beni'),
-                          Text('Av. Beni 4to Anillo'),
-                        ])
+                    Container(
+                      // color: Colors.red,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Farmacord-avenida beni',
+                              style: TextStyle(
+                                  fontFamily: 'Quicksand',
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsM.textColor),
+                            ),
+                            Text(
+                              'Av. Beni 4to Anillo',
+                              style: TextStyle(
+                                  fontFamily: 'Quicksand',
+                                  fontSize: 16.0,
+                                  color: ColorsM.textColor),
+                            ),
+                            SizedBox(height: 25.0),
+                            Text(
+                              'Farmacord-avenida beni',
+                              style: TextStyle(
+                                  fontFamily: 'Quicksand',
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsM.textColor),
+                            ),
+                            Text(
+                              'Av. Beni 4to Anillo',
+                              style: TextStyle(
+                                  fontFamily: 'Quicksand',
+                                  fontSize: 16.0,
+                                  color: ColorsM.textColor),
+                            ),
+                          ]),
+                    )
                   ],
-                )
+                ),
+                SizedBox(height: 15.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  width: MediaQuery.of(context).size.width,
+                  height: 30.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: ColorsM.primary,
+                      textStyle: const TextStyle(
+                          fontFamily: 'quicksand',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                    onPressed: () {},
+                    child: const Text('Aceptar pedido'),
+                  ),
+                ),
               ]),
             ));
       },
