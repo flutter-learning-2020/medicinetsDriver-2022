@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medicinetsdriver/models/user_model.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
 
-Widget drawerHome(BuildContext context, Function _handlePosition) {
+Widget drawerHome(
+    BuildContext context, Function _handlePosition, Data dataUser) {
   double statusBarHeight = MediaQuery.of(context).padding.top;
   const paddinLeft = EdgeInsets.only(left: 30.0);
   const _textStyle = TextStyle(
@@ -34,9 +36,9 @@ Widget drawerHome(BuildContext context, Function _handlePosition) {
                   height: 90,
                   child: Image.asset('assets/images/logo_medicinets.png'),
                 ),
-                const Text(
-                  'Juan Pérez',
-                  style: TextStyle(
+                Text(
+                  dataUser.nombre,
+                  style: const TextStyle(
                       fontFamily: 'Quicksand',
                       fontWeight: FontWeight.bold,
                       fontSize: 22.0,
@@ -49,7 +51,7 @@ Widget drawerHome(BuildContext context, Function _handlePosition) {
               title: const Text('Pedidos', style: _textStyle),
               onTap: () {
                 Navigator.pop(context);
-                _handlePosition(0);
+                _handlePosition(0, 'Pedidos');
               }),
           ListTile(
             contentPadding: paddinLeft,
@@ -57,7 +59,7 @@ Widget drawerHome(BuildContext context, Function _handlePosition) {
             title: const Text('Mi ganancias', style: _textStyle),
             onTap: () {
               Navigator.pop(context);
-              _handlePosition(1);
+              _handlePosition(1, 'Mi ganancias');
             },
           ),
           ListTile(
@@ -69,7 +71,7 @@ Widget drawerHome(BuildContext context, Function _handlePosition) {
               ),
               onTap: () {
                 Navigator.pop(context);
-                _handlePosition(2);
+                _handlePosition(2, 'Reseñas');
               }),
           const Divider(
             thickness: 1,
@@ -80,7 +82,7 @@ Widget drawerHome(BuildContext context, Function _handlePosition) {
               title: const Text('Ayuda', style: _textStyle),
               onTap: () {
                 Navigator.pop(context);
-                _handlePosition(3);
+                _handlePosition(3, 'Ayuda');
               }),
           ListTile(
             contentPadding: paddinLeft,
@@ -88,7 +90,8 @@ Widget drawerHome(BuildContext context, Function _handlePosition) {
             title: const Text('Cerrar sesión', style: _textStyle),
             onTap: () {
               Navigator.pop(context);
-              _handlePosition(4);
+              Navigator.pushReplacementNamed(context, '/');
+              _handlePosition(4, '');
             },
           ),
           const SizedBox(
