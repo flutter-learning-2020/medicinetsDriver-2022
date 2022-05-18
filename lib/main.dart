@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medicinetsdriver/pages/activate/activate.dart';
+import 'package:medicinetsdriver/pages/home/aceptarPedido/aceptar_pedido.dart';
+import 'package:medicinetsdriver/pages/home/destinoComercio.dart/destino_comercio.dart';
 import 'package:medicinetsdriver/pages/home/home.dart';
-import 'package:medicinetsdriver/pages/home/pedidodetalle/pedido_detalle.dart';
+
 import 'package:medicinetsdriver/pages/login/login.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
 
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const LoginPage(),
         '/activate': (context) => ActivatePage(),
         '/homePage': (context) => HomePage(),
-        '/pedidoDetalle': (context) => PedididoDetalle()
+        '/aceptarpedido': (context) => AceptarPedidoPage(),
+        '/destinocomercio': (context) => DestinoComercioPage(),
       },
     );
   }

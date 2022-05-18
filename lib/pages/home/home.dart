@@ -5,6 +5,7 @@ import 'package:medicinetsdriver/models/user_model.dart';
 import 'package:medicinetsdriver/pages/home/DrawerHome.dart';
 import 'package:medicinetsdriver/pages/home/misGanancias/misGanancias.dart';
 import 'package:medicinetsdriver/pages/home/pedidos/pedidos.dart';
+import 'package:medicinetsdriver/pages/home/resenas/resenas.dart';
 import 'package:medicinetsdriver/providers/dirver_sactive_provider.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
 
@@ -38,20 +39,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  _selectedOptionDrawer(int position, idDriver) {
+  _selectedOptionDrawer(int position, String idDiver) {
     switch (position) {
       case 0:
-        return PedidosPage(
-          idDriver: idDriver,
-        );
+        return PedidosPage(idDriver: idDiver);
       case 1:
         return MisGananciasPage();
+      case 2:
+        return ResenasPage();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final Data _dataUser = ModalRoute.of(context)!.settings.arguments as Data;
+    _onActive = _dataUser.activado == "1" ? true : false;
 
     return Scaffold(
       key: _scaffolkey,
@@ -75,7 +77,8 @@ class _HomePageState extends State<HomePage> {
               onChanged: (value) {
                 setState(() {
                   _onActive = !_onActive;
-                  _updateDriverState(context);
+                  _dataUser.activado = _onActive ? "1" : "0";
+                  _updateDriverState(context, _dataUser.id);
                 });
               }),
         ],
@@ -96,8 +99,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _updateDriverState(BuildContext context) {
+  _updateDriverState(BuildContext context, String idDriver) async {
+    final idDriver2 = int.parse(idDriver);
+    final stateDriver = _onActive ? 1 : 0;
     final updateStateDriver = UpdateStateDriver();
-    updateStateDriver.updateStateDriver(1, 1);
+    final respondeData =
+        await updateStateDriver.updateStateDriver(idDriver2, stateDriver);
+    if (respondeData.codigo == 0) {
+      return _showSnackBar();
+    }
+  }
+
+  _showSnackBar() {
+    final snackBar = SnackBar(
+      backgroundColor: ColorsM.secondary,
+      content: Text(
+        _onActive ? 'Driver Activo' : 'Driver Desactivado',
+        style: const TextStyle(
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.w500,
+            fontSize: 20.0),
+      ),
+      action: SnackBarAction(
+        label: _onActive ? 'Activado' : 'Desactivado',
+        onPressed: () {},
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

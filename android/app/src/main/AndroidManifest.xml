@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.medicinetsdriver.medicinetsdriver">
+     <uses-permission android:name="android.permission.INTERNET"/>
+     
    <application
         android:label="medicinetsdriver"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+    <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCU118_vTBBcrHmI0cJCGfwt39n760H-eQ"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
