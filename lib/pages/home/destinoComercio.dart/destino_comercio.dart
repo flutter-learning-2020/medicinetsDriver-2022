@@ -8,9 +8,15 @@ class DestinoComercioPage extends StatefulWidget {
   State<DestinoComercioPage> createState() => _DestinoComercioPageState();
 }
 
+enum SingingCharacter { cantidadproductos }
+enum SinginCharacter { razonsocila }
+
 class _DestinoComercioPageState extends State<DestinoComercioPage> {
   @override
   Widget build(BuildContext context) {
+    SingingCharacter? characterCantidadProductos =
+        SingingCharacter.cantidadproductos;
+    SinginCharacter? characterRazonSocial = SinginCharacter.razonsocila;
     return Scaffold(
       appBar: AppBar(
         title: Text('Pedidos'),
@@ -132,26 +138,39 @@ class _DestinoComercioPageState extends State<DestinoComercioPage> {
             color: ColorsM.textColor,
             thickness: 1,
           ),
-          _DetallePedido(),
+          _DetallePedido(
+              context, characterCantidadProductos, characterRazonSocial),
         ]),
       ),
     );
   }
 
-  _DetallePedido() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Detalles del pedido',
-          style: TextStyle(
-              fontFamily: 'Quicksand',
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: ColorsM.textColor),
-        )
-      ],
+  Widget _DetallePedido(
+      BuildContext context,
+      SingingCharacter characterCantidadProductos,
+      SinginCharacter characterRazonSocial) {
+    return Expanded(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.amber[100],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Detalles del pedido',
+              style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: ColorsM.textColor),
+            ),
+            const SizedBox(height: 10.0),
+            Row(children: <Widget>[])
+          ],
+        ),
+      ),
     );
   }
 }

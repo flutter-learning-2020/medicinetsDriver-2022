@@ -106,7 +106,7 @@ class AceptarPedidoPage extends StatelessWidget {
                         ),
                         onPressed: () {},
                         icon: Image.asset('assets/images/icon_waze.png'),
-                        label: Text('Ver en Google Maps',
+                        label: Text('Abrir Waze',
                             style: TextStyle(color: ColorsM.textColor))),
                   ),
                 ),

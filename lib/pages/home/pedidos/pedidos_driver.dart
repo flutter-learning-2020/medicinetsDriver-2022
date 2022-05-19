@@ -2,92 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medicinetsdriver/models/pedidos_model.dart';
 import 'package:medicinetsdriver/models/solicitudes_model.dart';
-import 'package:medicinetsdriver/models/user_model.dart';
-import 'package:medicinetsdriver/pages/home/pedidos/pedidos_driver.dart';
 import 'package:medicinetsdriver/providers/pedidos_provider.dart';
-import 'package:medicinetsdriver/providers/solicitudes_provider.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
 
-class PedidosPage extends StatefulWidget {
+class PedidosDriverPage extends StatefulWidget {
   final String idDriver;
-  const PedidosPage({Key? key, required this.idDriver}) : super(key: key);
+  const PedidosDriverPage({Key? key, required this.idDriver}) : super(key: key);
 
   @override
-  State<PedidosPage> createState() =>
-      _PedidosPageState(idDriver: this.idDriver);
+  State<PedidosDriverPage> createState() =>
+      _PedidosDriverPageState(idDriver: this.idDriver);
 }
 
-class _PedidosPageState extends State<PedidosPage> {
+class _PedidosDriverPageState extends State<PedidosDriverPage> {
   final String idDriver;
-  _PedidosPageState({required this.idDriver});
+  _PedidosDriverPageState({required this.idDriver});
 
-  int _position = 0;
-  String title = 'Pedidos';
-
-  final _solicitudesProvider = SolicitudesProvider();
+  PedidosProvider _pedidosProvider = PedidosProvider();
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Container(
-        height: Size.infinite.height,
-        width: Size.infinite.width,
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-              height: 55,
-              child: TabBar(
-                unselectedLabelStyle: const TextStyle(
-                  fontFamily: 'Quicksand',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-                indicatorSize: TabBarIndicatorSize.label,
-                unselectedLabelColor: ColorsM.primary,
-                indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: ColorsM.secondary),
-                tabs: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: const Text(
-                      'Pedidos',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: const Text('Pedidos driver',
-                        style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.w600)),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-                child: TabBarView(children: [
-              _indexPedidos(idDriver),
-              PedidosDriverPage(
-                idDriver: idDriver,
-              )
-            ]))
-          ],
-        ),
-      ),
-    );
+    return _indexPedidos(idDriver);
   }
 
-  _indexPedidos(String _idDriver) {
+  Widget _indexPedidos(String _idDriver) {
     return FutureBuilder(
-      future: _solicitudesProvider.getSolicitudes(_idDriver),
+      future: _pedidosProvider.getPedidos(_idDriver, '0'),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.codigo == 0) {
-            if (snapshot.data.data.length > 0) {
-              final List<Datum> _pedidos = snapshot.data.data;
+            if (snapshot.data.data.listado.length > 0) {
+              final List<Datum> _pedidos = snapshot.data.data.listado;
+
               return _showListCardPedidos(context, _pedidos);
             } else {
               return _listPedidosVacio();
@@ -102,7 +48,7 @@ class _PedidosPageState extends State<PedidosPage> {
     );
   }
 
-  Widget _showListCardPedidos(BuildContext context, data) {
+  Widget _showListCardPedidos(BuildContext context, List<Datum> data) {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: ((context, index) {
@@ -238,8 +184,9 @@ class _PedidosPageState extends State<PedidosPage> {
                         ),
                         onPressed: () {
                           Datum dataP = data[index];
+                          final dataPedido = data[index];
                           Navigator.pushNamed(context, '/aceptarpedido',
-                              arguments: dataP);
+                              arguments: dataPedido);
                         },
                         child: const Text('Aceptar pedido'),
                       ),
@@ -251,84 +198,11 @@ class _PedidosPageState extends State<PedidosPage> {
         }));
   }
 
-  _listPedidosVacio() {
-    return Center(
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              key: const Key('bag'),
-              width: 200.9,
-              height: 200.0,
-              child: SvgPicture.asset('assets/images/bag.svg'),
-            ),
-            const SizedBox(height: 30.9),
-            const Text(
-              'No hay nuevas órdenes',
-              style: TextStyle(
-                  fontFamily: 'quicksand',
-                  fontSize: 22.0,
-                  color: ColorsM.secondary,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'Permanece atento a las notificaciones para emperzar a repartir',
-                style: TextStyle(
-                  fontFamily: 'quicksand',
-                  fontSize: 14.0,
-                  color: ColorsM.textColor,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            )
-          ]),
-    );
+  Widget _listPedidosVacio() {
+    return Text('data');
   }
 
-  _showMessage(String message) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      // color: Color.fromARGB(255, 255, 65, 65),
-      margin: EdgeInsets.all(10.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: 10.0),
-            width: MediaQuery.of(context).size.width,
-            height: 150.0,
-            child: SvgPicture.asset('assets/images/driver_desactived.svg'),
-          ),
-          Container(
-            child: Text(
-              message,
-              style: TextStyle(
-                  fontFamily: 'quicksand',
-                  fontSize: 21.0,
-                  color: ColorsM.secondary,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: 10.0),
-          Container(
-            child: Text(
-              'Permanece atento a las notificaciones para emperzar a repartir',
-              style: TextStyle(
-                fontFamily: 'quicksand',
-                fontSize: 16.0,
-                color: ColorsM.textColor,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
+  Widget _showMessage(message) {
+    return Text('sss');
   }
 }

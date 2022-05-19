@@ -1,3 +1,5 @@
+import 'package:medicinetsdriver/models/solicitudes_model.dart';
+
 class PedidosModel {
   PedidosModel({
     required this.codigo,
@@ -37,14 +39,14 @@ class Data {
   int totalPaginas;
   int porPagina;
   int paginaActual;
-  List<Listado> listado;
+  List<Datum> listado;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         totalPaginas: json["totalPaginas"],
         porPagina: json["porPagina"],
         paginaActual: json["paginaActual"],
         listado:
-            List<Listado>.from(json["listado"].map((x) => Listado.fromJson(x))),
+            List<Datum>.from(json["listado"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

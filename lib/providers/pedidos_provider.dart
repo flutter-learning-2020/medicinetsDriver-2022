@@ -22,7 +22,7 @@ class PedidosProvider {
       print(decodeData);
       if (decodeData['Codigo'] == 0) {
         final pedidos = PedidosModel.fromJson(decodeData);
-        return pedidos.data.listado;
+        return pedidos;
       } else {
         return ResponseServer(codigo: 1, message: decodeData['Mensaje']);
       }
