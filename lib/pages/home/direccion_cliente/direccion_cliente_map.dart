@@ -7,16 +7,16 @@ import 'package:medicinetsdriver/models/solicitudes_model.dart';
 import 'package:medicinetsdriver/pages/home/DrawerHome.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
 
-class AceptarPedidoPage extends StatelessWidget {
-  const AceptarPedidoPage({
+class DireccionClientepMapPage extends StatelessWidget {
+  const DireccionClientepMapPage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dataPedido = ModalRoute.of(context)!.settings.arguments as Datum;
-    final latComercio = double.parse(dataPedido.latitudComercio);
-    final lngComercio = double.parse(dataPedido.longitudComercio);
+    final dataPedido = ModalRoute.of(context)?.settings.arguments as Datum;
+    final latComercio = double.parse(dataPedido.latitud);
+    final lngComercio = double.parse(dataPedido.longitud);
 
     final _initialCamaraPosition = CameraPosition(
       target: LatLng(latComercio, lngComercio),
@@ -48,14 +48,14 @@ class AceptarPedidoPage extends StatelessWidget {
       initialCameraPosition: initialCamaraPosition,
       markers: {
         Marker(
-          markerId: MarkerId('${dataPedido.nombreComercio}'),
+          markerId: MarkerId('${dataPedido.referenciaDireccion}'),
           position: LatLng(latComercio, lngComercio),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             BitmapDescriptor.hueRed,
           ),
           infoWindow: InfoWindow(
-            title: dataPedido.nombreComercio,
-            snippet: dataPedido.direccionComercio,
+            title: dataPedido.referenciaDireccion,
+            snippet: dataPedido.referenciaDireccion,
           ),
         ),
       },
@@ -130,7 +130,7 @@ class AceptarPedidoPage extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Text('Dirígete al comercio',
+                  Text('Dirígete a la dirección',
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -140,9 +140,9 @@ class AceptarPedidoPage extends StatelessWidget {
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Image.asset(
-                      'assets/images/icon_farmacord.png',
-                      width: 80,
-                      height: 80,
+                      'assets/images/user_avatar.png',
+                      width: 90,
+                      height: 90,
                     ),
                     const SizedBox(
                       width: 10,
@@ -153,7 +153,7 @@ class AceptarPedidoPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          dataPedido.nombreComercio,
+                          dataPedido.nit,
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -163,7 +163,7 @@ class AceptarPedidoPage extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          dataPedido.direccionComercio,
+                          dataPedido.direccion,
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ class AceptarPedidoPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Contacto a Comercio',
+                          'Contacto del cliente',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -254,8 +254,8 @@ class AceptarPedidoPage extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/destinocomercio',
-                                  arguments: dataPedido);
+                              // Navigator.pushNamed(context, '/destinocomercio',
+                              //     arguments: dataPedido);
                             },
                           ),
                         )

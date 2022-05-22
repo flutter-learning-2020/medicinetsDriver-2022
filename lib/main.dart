@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medicinetsdriver/pages/activate/activate.dart';
 import 'package:medicinetsdriver/pages/home/aceptarPedido/aceptar_pedido.dart';
 import 'package:medicinetsdriver/pages/home/destinoComercio.dart/destino_comercio.dart';
+import 'package:medicinetsdriver/pages/home/direccion_cliente/direccion_cliente_map.dart';
 import 'package:medicinetsdriver/pages/home/home.dart';
 
 import 'package:medicinetsdriver/pages/login/login.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/homePage': (context) => HomePage(),
         '/aceptarpedido': (context) => AceptarPedidoPage(),
         '/destinocomercio': (context) => DestinoComercioPage(),
+        '/direccionCliente': (context) => DireccionClientepMapPage()
       },
     );
   }

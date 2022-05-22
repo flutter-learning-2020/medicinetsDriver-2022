@@ -5,6 +5,7 @@ import 'package:medicinetsdriver/flutter_bloc/user_bloc.dart';
 import 'package:medicinetsdriver/models/user_model.dart';
 import 'package:medicinetsdriver/providers/login_provider.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,8 +20,27 @@ class _LoginPageState extends State<LoginPage> {
     'password': 'admin',
   };
 
-  String user = 'prueba@gmail.com';
-  String password = '123456';
+  final Future<SharedPreferences> preferences = SharedPreferences.getInstance();
+  late Future<String> _dataUs;
+
+  Future<void> _updateData() async {
+    final SharedPreferences prefs = await preferences;
+    final String _dataUs2 = (prefs.getString('email') ?? '');
+  }
+
+  Future<void> _setDataUs(email) async {
+    final SharedPreferences prefs = await preferences;
+    prefs.setString('email', email);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _updateData();
+  }
+
+  String user = '';
+  String password = '';
   bool isLoading = false;
   bool _obscureText = true;
 
@@ -93,7 +113,9 @@ class _LoginPageState extends State<LoginPage> {
                   fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
               icon: const Icon(Icons.lock),
               suffixIcon: IconButton(
-                icon: const Icon(Icons.visibility_off_outlined),
+                icon: _obscureText
+                    ? const Icon(Icons.visibility_off_outlined)
+                    : const Icon(Icons.visibility_outlined),
                 onPressed: () {
                   setState(() {
                     _obscureText = !_obscureText;
@@ -121,22 +143,26 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
             ),
             onPressed: () {
-              _handlePassWord(context);
+              _handlePassWord(context, _setDataUs);
             },
             child: const Text('Ingresar'),
           ),
-        )
+        ),
+        Text('${_dataUs}')
       ])),
     );
   }
 
-  _handlePassWord(BuildContext context) async {
+  _handlePassWord(BuildContext context, setDataUs) async {
     final loginProvider = LoginProvider();
 
     final response = await loginProvider.loginUser(user, password);
     // print(response!.nombre);
     print(response.codigo == 0);
     print({'user: $user', 'password: $password'});
+
+    setDataUs(response.email);
+
     if (response.codigo == 0) {
       Navigator.pushReplacementNamed(context, '/activate', arguments: response);
     }
