@@ -24,7 +24,7 @@ class LoginProvider {
         final decodeData = await json.decode(response.body);
         print(decodeData);
         if (decodeData['Codigo'] == 0) {
-          final userData = User.fromJson(decodeData);
+          final userData = await User.fromJson(decodeData);
           return userData;
         } else {
           return ResponseServer(codigo: 1, message: decodeData['Mensaje']);

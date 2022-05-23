@@ -1,10 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medicinetsdriver/models/user_model.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Widget drawerHome(
     BuildContext context, Function _handlePosition, Data dataUser) {
+  Future<SharedPreferences> preferences = SharedPreferences.getInstance();
+
+  // actualiza los datos de user preferences en el login
+  Future<void> _cerarSesion() async {
+    final SharedPreferences prefs = await preferences;
+    String dataUser = await (prefs.getString('dataUser') ?? '');
+    final dataDecode = await json.decode(dataUser);
+    dataDecode['email'] = '';
+    dataDecode['password'] = '';
+    dataDecode['isLoging'] = false;
+    String encodedData = await json.encode(dataDecode);
+    prefs.setString('dataUser', encodedData);
+    // print(encodedData);
+  }
+
   double statusBarHeight = MediaQuery.of(context).padding.top;
   const paddinLeft = EdgeInsets.only(left: 30.0);
   const _textStyle = TextStyle(
@@ -89,6 +107,7 @@ Widget drawerHome(
             leading: SvgPicture.asset('assets/images/icon_cerrar_sesion.svg'),
             title: const Text('Cerrar sesión', style: _textStyle),
             onTap: () {
+              _cerarSesion();
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, '/');
               _handlePosition(4, '');

@@ -10,11 +10,11 @@ class ActivatePage extends StatefulWidget {
   State<ActivatePage> createState() => _ActivatePageState();
 }
 
-enum SingingCharacter { mascarillaAndCubreBocas, desinfectante, distansamiento }
-
 class _ActivatePageState extends State<ActivatePage> {
   final String svgPathMotorbike = 'assets/images/motorbike.svg';
-  SingingCharacter? _character = SingingCharacter.mascarillaAndCubreBocas;
+  bool isChecked1 = false;
+  bool isChecked2 = false;
+  bool isChecked3 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class _ActivatePageState extends State<ActivatePage> {
               Container(
                 key: const Key('motorbike'),
                 // color: Colors.amber,
-                width: 200.0,
-                height: 200.0,
+                width: 190.0,
+                height: 190.0,
                 child: _motorbikeSvg,
               ),
               const SizedBox(height: 30.9),
@@ -56,61 +56,67 @@ class _ActivatePageState extends State<ActivatePage> {
               ),
               const SizedBox(height: 50.0),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
+                contentPadding: const EdgeInsets.only(left: 30.0, right: 30.0),
                 title: const Text('Tengo mascarilla o cubrebocas',
                     style: TextStyle(
                         color: ColorsM.textColor,
                         fontFamily: 'Quicksand',
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500)),
-                trailing: Radio<SingingCharacter>(
+                trailing: Checkbox(
                   focusColor: const Color(0Xff3EC895),
                   activeColor: const Color(0Xff3EC895),
-                  value: SingingCharacter.mascarillaAndCubreBocas,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
+                  // side: BorderSide(color: ColorsM.secondary, width: 12.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  value: isChecked1,
+                  onChanged: (bool? value) {
                     setState(() {
-                      _character = value;
+                      isChecked1 = value!;
                     });
                   },
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
+                contentPadding: const EdgeInsets.only(left: 30.0, right: 30.0),
                 title: const Text('Desinfectaré mis manos',
                     style: TextStyle(
                         color: ColorsM.textColor,
                         fontFamily: 'Quicksand',
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500)),
-                trailing: Radio<SingingCharacter>(
+                trailing: Checkbox(
                   focusColor: const Color(0Xff3EC895),
                   activeColor: const Color(0Xff3EC895),
-                  value: SingingCharacter.desinfectante,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  value: isChecked2,
+                  onChanged: (bool? value) {
                     setState(() {
-                      _character = value;
+                      isChecked2 = value!;
                     });
                   },
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30.0, right: 30.0),
+                contentPadding: const EdgeInsets.only(left: 30.0, right: 30.0),
                 title: const Text('Mantendré el distanciamiento',
                     style: TextStyle(
                         color: ColorsM.textColor,
                         fontFamily: 'Quicksand',
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500)),
-                trailing: Radio<SingingCharacter>(
+                trailing: Checkbox(
                   focusColor: const Color(0Xff3EC895),
                   activeColor: const Color(0Xff3EC895),
-                  value: SingingCharacter.distansamiento,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  value: isChecked3,
+                  onChanged: (bool? value) {
                     setState(() {
-                      _character = value;
+                      isChecked3 = value!;
                     });
                   },
                 ),
