@@ -34,12 +34,16 @@ dependencies:
   google_fonts: ^2.3.2
   flutter_svg: ^1.0.3
   http: ^0.13.4
+  wakelock: ^0.6.1+2
   shared_preferences: ^2.0.15
+  external_app_launcher: ^2.0.2
+  url_launcher: ^6.1.2
   provider: ^6.0.2
   google_maps_flutter: ^2.1.5
   flutter_rating_bar: ^4.0.0
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
+  map_launcher: ^2.2.2
 
   
 

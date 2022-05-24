@@ -1,11 +1,17 @@
+import 'dart:io';
+
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:medicinetsdriver/models/pedidos_model.dart';
 import 'package:medicinetsdriver/models/solicitudes_model.dart';
 import 'package:medicinetsdriver/pages/home/DrawerHome.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
+import 'package:medicinetsdriver/utils/map_launch_or_install/map_launch_or_install.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AceptarPedidoPage extends StatelessWidget {
   const AceptarPedidoPage({
@@ -14,6 +20,8 @@ class AceptarPedidoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final availableMaps = await MapLauncher.installedMaps;
+
     final dataPedido = ModalRoute.of(context)!.settings.arguments as Datum;
     final latComercio = double.parse(dataPedido.latitudComercio);
     final lngComercio = double.parse(dataPedido.longitudComercio);
@@ -80,15 +88,36 @@ class AceptarPedidoPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          elevation: 6,
-                          padding: EdgeInsets.all(15),
-                        ),
-                        onPressed: () {},
-                        icon: Image.asset('assets/images/icon_google_maps.png'),
-                        label: Text('Ver en Google Maps',
-                            style: TextStyle(color: ColorsM.textColor))),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        elevation: 6,
+                        padding: EdgeInsets.all(15),
+                      ),
+                      icon: Image.asset('assets/images/icon_google_maps.png'),
+                      label: const Text(
+                        'Ver en Google Maps',
+                        style: TextStyle(color: ColorsM.textColor),
+                      ),
+                      onPressed: () async {
+                        // var url = Uri.parse(
+                        //     'geo:0,0?q=${dataPedido.latitudComercio},${dataPedido.longitudComercio}');
+                        // if (Platform.isIOS) {
+                        //   url = Uri.parse(
+                        //       'http://maps.apple.com/?q=${dataPedido.latitudComercio},${dataPedido.longitudComercio}');
+                        // }
+                        // launchUrl(url);
+                        final double lat =
+                            double.parse(dataPedido.latitudComercio);
+                        final double lng =
+                            double.parse(dataPedido.longitudComercio);
+                        MapLauchOrInstall mapLauchOrInstall = MapLauchOrInstall(
+                            latitude: lat,
+                            longitude: lng,
+                            title: dataPedido.nombreComercio,
+                            nombreDelMapaAMostrar: 'Google Maps');
+                        mapLauchOrInstall.mapLauncherMyFunc();
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
@@ -99,15 +128,31 @@ class AceptarPedidoPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          elevation: 6,
-                          padding: EdgeInsets.all(15),
-                        ),
-                        onPressed: () {},
-                        icon: Image.asset('assets/images/icon_waze.png'),
-                        label: Text('Abrir Waze',
-                            style: TextStyle(color: ColorsM.textColor))),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        elevation: 6,
+                        padding: EdgeInsets.all(15),
+                      ),
+                      icon: Image.asset('assets/images/icon_waze.png'),
+                      label: Text('Abrir Waze',
+                          style: TextStyle(color: ColorsM.textColor)),
+                      onPressed: () {
+                        // 'https://waze.com/ul?ll=${dataPedido.latitudComercio},${dataPedido.longitudComercio}&navigate=yes'));
+                        // launchUrl(Uri.parse(
+                        //     "market://details?id=${dataPedido.latitudComercio},${dataPedido.longitudComercio}&navigate=yes"));
+                        // _maps(dataPedido);
+                        final double lat =
+                            double.parse(dataPedido.latitudComercio);
+                        final double lng =
+                            double.parse(dataPedido.longitudComercio);
+                        MapLauchOrInstall mapLauchOrInstall = MapLauchOrInstall(
+                            latitude: lat,
+                            longitude: lng,
+                            title: dataPedido.nombreComercio,
+                            nombreDelMapaAMostrar: 'Waze');
+                        mapLauchOrInstall.mapLauncherMyFunc();
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -267,5 +312,40 @@ class AceptarPedidoPage extends StatelessWidget {
             ),
           ]),
     );
+  }
+
+  // esta en utils para poder usarlo en otro lado
+  _maps(dataPedido) async {
+    final availableMaps = await MapLauncher.installedMaps;
+    print(availableMaps);
+
+    double lat = double.parse(dataPedido.latitudComercio);
+    double lng = double.parse(dataPedido.longitudComercio);
+
+    print(await MapLauncher.isMapAvailable(
+        availableMaps.map((e) => e.mapType).first));
+    availableMaps.forEach((element) {
+      if (element.mapType.name == 'waze') {
+        MapLauncher.showMarker(
+          coords: Coords(lat, lng),
+          title: dataPedido.nombreComercio,
+          description: dataPedido.direccionComercio,
+          mapType: element.mapType,
+        );
+      }
+      print(element.mapType);
+    });
+
+    // if (availableMaps.isNotEmpty) {
+    //   try {
+    //     await availableMaps.first.showMarker(
+    //       coords: Coords(lat, lng),
+    //       title: dataPedido.nombreComercio,
+    //       description: dataPedido.direccionComercio,
+    //     );
+    //   } catch (e) {
+    //     print(e.toString());
+    //   }
+    // }
   }
 }

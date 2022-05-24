@@ -8,8 +8,11 @@ import 'package:medicinetsdriver/pages/home/home.dart';
 
 import 'package:medicinetsdriver/pages/login/login.dart';
 import 'package:medicinetsdriver/theme/ColorM.dart';
+import 'package:wakelock/wakelock.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Wakelock.enabled;
   runApp(const MyApp());
 }
 
